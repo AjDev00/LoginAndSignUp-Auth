@@ -1,6 +1,13 @@
 import { createContext, useState } from "react";
 import "./App.css";
 import Container from "./components/Container";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom/cjs/react-router-dom.min";
+import ForgotPassword from "./components/ForgotPassword";
+
 export const AppContext = createContext();
 
 function App() {
@@ -17,7 +24,16 @@ function App() {
   return (
     <div className="">
       <AppContext.Provider value={{ signUp, handleLogIn, handleSignUp }}>
-        <Container />
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Container />
+            </Route>
+            <Route path="/forgot-password">
+              <ForgotPassword />
+            </Route>
+          </Switch>
+        </Router>
       </AppContext.Provider>
     </div>
   );

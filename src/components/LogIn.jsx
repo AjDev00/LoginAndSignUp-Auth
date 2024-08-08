@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export default function LogIn() {
   //react hook forms.
@@ -14,10 +16,37 @@ export default function LogIn() {
   //login form params.
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [allData, setAllData] = useState("");
+  const [username, setUsername] = useState("");
+  const [err, setErr] = useState("");
 
-  function onSubmit() {
-    console.log("login submitted");
+  async function onSubmit() {
+    const res = await fetch("http://localhost:8000/api/users/name/email");
+    const data = await res.json();
+
+    setUsername("");
+    setErr("");
+
+    // // console.log(data);
+    setAllData(data.data);
+
+    allData &&
+      allData.map((oneData) => {
+        return loginUsername === oneData.name || loginUsername === oneData.email
+          ? toast("Correct Username!")
+          : loginUsername !== oneData.name || loginUsername !== oneData.email
+          ? setErr("Incorrect Username")
+          : "";
+      });
+
+    console.log(allData);
+    // if (loginUsername === allData.name) {
+    //   console.log("Correct Username");
+    // } else {
+    //   console.log("Incorrect username");
+    // }
   }
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
@@ -31,10 +60,16 @@ export default function LogIn() {
               value={loginUsername}
               className="border border-slate-200 bg-slate-200 rounded-full p-3 placeholder:text-black placeholder:opacity-90 w-full text-[18px] placeholder:px-3 focus:outline-green-300"
             />
-            {errors.email && (
-              <span className="text-red-500 font-semibold px-3">
-                This field is required
-              </span>
+            {username && !err & errors.email ? (
+              <div>{username}</div>
+            ) : err && !errors.email ? (
+              <div>{err}</div>
+            ) : (
+              errors.email && (
+                <span className="text-red-500 font-semibold px-3">
+                  This field is required
+                </span>
+              )
             )}
           </div>
         </div>

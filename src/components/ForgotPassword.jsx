@@ -26,7 +26,7 @@ export default function ForgotPassword() {
       <div className="px-3 mt-24">
         <div className="border border-transparent rounded-tl-xl rounded-tr-xl rounded-br-xl shadow-xl px-3 bg-white">
           <div className="text-[18px] font-semibold flex justify-center text-center py-3">
-            Olodo change your password here!
+            Olodo, change your password here!
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -85,12 +85,12 @@ export default function ForgotPassword() {
             </div>
             <div className="flex flex-row justify-between">
               <div>
-                <button
+                <div
                   onClick={() => history.go(-1)}
                   className="justify-center mt-4 items-center flex border border-transparent text-white p-2 px-4 bg-slate-400 rounded-md font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300"
                 >
                   Back
-                </button>
+                </div>
               </div>
               <div>
                 <button className="justify-center mt-4 items-center flex border border-transparent border-green-500 text-white p-2 px-4 bg-green-500 rounded-md font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">

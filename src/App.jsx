@@ -7,6 +7,7 @@ import {
   Route,
 } from "react-router-dom/cjs/react-router-dom.min";
 import ForgotPassword from "./components/ForgotPassword";
+import { ToastContainer } from "react-toastify";
 
 export const AppContext = createContext();
 
@@ -35,6 +36,7 @@ function App() {
           </Switch>
         </Router>
       </AppContext.Provider>
+      <ToastContainer />
     </div>
   );
 }

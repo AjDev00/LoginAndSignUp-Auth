@@ -12,22 +12,22 @@ export default function Container() {
         <div className="flex flex-row justify-between mb-10 text-[18px]">
           <div onClick={handleLogIn} className="">
             {signUp ? (
-              <div className="font-semibold justify-center items-center flex ml-6 mt-5 w-24">
+              <div className="cursor-pointer font-semibold justify-center items-center flex ml-6 mt-5 w-24">
                 Log In
               </div>
             ) : (
-              <div className="items-center justify-center flex border border-transparent text-white p-3 bg-green-500 font-semibold rounded-tl-xl rounded-tr-xl rounded-br-xl px-14 py-4 -ml-3.5 hover:opacity-70 duration-300">
+              <div className="cursor-pointer items-center justify-center flex border border-transparent text-white p-3 bg-green-500 font-semibold rounded-tl-xl rounded-tr-xl rounded-br-xl px-14 py-4 -ml-3.5 hover:opacity-70 duration-300 -mt-[1px]">
                 Log In
               </div>
             )}
           </div>
           <div onClick={handleSignUp} className="">
             {signUp ? (
-              <div className="font-semibold justify-center items-center flex border border-transparent bg-green-500 text-white p-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl -mr-3.5 px-14 py-4 hover:opacity-70 duration-300">
+              <div className="cursor-pointer font-semibold justify-center items-center flex border border-transparent bg-green-500 text-white p-3 rounded-tl-xl rounded-tr-xl rounded-bl-xl -mr-3.5 px-14 py-4 hover:opacity-70 duration-300 -mt-[1px]">
                 Sign Up
               </div>
             ) : (
-              <div className="font-semibold justify-center items-center flex mr-6 mt-4 w-24">
+              <div className="cursor-pointer font-semibold justify-center items-center flex mr-6 mt-4 w-24">
                 Sign Up
               </div>
             )}

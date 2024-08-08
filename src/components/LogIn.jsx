@@ -59,7 +59,7 @@ export default function LogIn() {
           <button>Login</button>
         </div>
         <div className="px-1 mt-2 text-[18px] text-green-500 font-semibold cursor-pointer hover:opacity-80 duration-300">
-          <Link to="/forgot-password">Forgotten Password ?</Link>
+          <Link to="/forgot-password">Forgotten Password?</Link>
         </div>
         <div>
           <hr />

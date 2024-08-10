@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { toast } from "react-toastify";
+import { FaEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
 export default function ForgotPassword() {
   //react hook form params.
@@ -16,11 +19,55 @@ export default function ForgotPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confNewPassword, setConfNewPassword] = useState("");
 
+  //error handling params.
+  const [err, setErr] = useState("");
+  const [pwdErr, setPwdErr] = useState("");
+  const [userErr, setUserErr] = useState("");
+
+  //password visibility params.
+  const [newPasswordVisibility, setNewPasswordVisibility] = useState(false);
+  const [confPasswordVisibility, setConfPasswordVisibility] = useState(false);
+  const type = "password";
+  const type2 = "text";
+
   const history = useHistory();
 
-  function onSubmit() {
-    console.log("signup submitted");
+  //update password using api.
+  async function onSubmit(data) {
+    if (newPassword === confNewPassword) {
+      const newData = {
+        ...data,
+        name: confUsername,
+        password: confNewPassword,
+      };
+      const res = await fetch(
+        "http://localhost:8000/api/update-password/" + confUsername,
+        {
+          method: "PUT",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(newData),
+        }
+      );
+
+      const allData = await res.json();
+
+      if (allData.status === false && allData.code === 400) {
+        setPwdErr(allData.errors.password[0]);
+      } else if (allData.status === false && allData.code === 404) {
+        setUserErr(allData.message);
+      } else {
+        toast("Password Updated!");
+        history.push("/");
+      }
+
+      // console.log(allData);
+    } else {
+      setErr("Passwords do not match!");
+    }
   }
+
   return (
     <div>
       <div className="px-3 mt-24">
@@ -32,13 +79,19 @@ export default function ForgotPassword() {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-5 mt-4"
           >
+            {/* //email or username. */}
             <div>
               <div>
                 <input
                   type="text"
                   {...register("email", { required: true })}
                   placeholder="Enter email or username"
-                  onChange={(e) => setConfUsername(e.target.value)}
+                  onChange={(e) =>
+                    setConfUsername(e.target.value) -
+                    setErr("") -
+                    setUserErr("") -
+                    setPwdErr("")
+                  }
                   value={confUsername}
                   className="border border-slate-200 bg-slate-200 rounded-full p-3 placeholder:text-black placeholder:opacity-90 w-full text-[18px] placeholder:px-3 focus:outline-green-300"
                 />
@@ -49,16 +102,35 @@ export default function ForgotPassword() {
                 )}
               </div>
             </div>
+
+            {/* //new password. */}
             <div>
               <div>
                 <input
-                  type="password"
+                  type={newPasswordVisibility ? type2 : type}
                   {...register("password", { required: true })}
                   placeholder="Enter new password"
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={(e) =>
+                    setNewPassword(e.target.value) -
+                    setErr("") -
+                    setUserErr("") -
+                    setPwdErr("")
+                  }
                   value={newPassword}
                   className="border border-slate-200 bg-slate-200 rounded-full p-3 placeholder:text-black placeholder:opacity-90 w-full text-[18px] placeholder:px-3 focus:outline-green-300"
                 />
+                <div
+                  onClick={() =>
+                    setNewPasswordVisibility(!newPasswordVisibility)
+                  }
+                >
+                  {newPasswordVisibility ? (
+                    <FaEye className="ml-64 -mt-9 opacity-80" size={18} />
+                  ) : (
+                    <FaEyeSlash className="ml-64 -mt-9 opacity-80" size={18} />
+                  )}
+                </div>
+                <br />
                 {errors.password && (
                   <span className="text-red-500 font-semibold px-3">
                     This field is required
@@ -66,16 +138,30 @@ export default function ForgotPassword() {
                 )}
               </div>
             </div>
+
+            {/* //confirm new password. */}
             <div>
               <div>
                 <input
-                  type="password"
+                  type={confPasswordVisibility ? type2 : type}
                   {...register("confirmPassword", { required: true })}
                   placeholder="Confirm new password"
                   onChange={(e) => setConfNewPassword(e.target.value)}
                   value={confNewPassword}
                   className="border border-slate-200 bg-slate-200 rounded-full p-3 placeholder:text-black placeholder:opacity-90 w-full text-[18px] placeholder:px-3 focus:outline-green-300"
                 />
+                <div
+                  onClick={() =>
+                    setConfPasswordVisibility(!confPasswordVisibility)
+                  }
+                >
+                  {confPasswordVisibility ? (
+                    <FaEye className="ml-64 -mt-9 opacity-80" size={18} />
+                  ) : (
+                    <FaEyeSlash className="ml-64 -mt-9 opacity-80" size={18} />
+                  )}
+                </div>
+                <br />
                 {errors.confirmPassword && (
                   <span className="text-red-500 font-semibold px-3">
                     This field is required
@@ -83,6 +169,21 @@ export default function ForgotPassword() {
                 )}
               </div>
             </div>
+
+            {/* //print error. */}
+            <div className="flex justify-center items-center">
+              {userErr ? (
+                <div className="text-red-500 font-semibold">{userErr}</div>
+              ) : pwdErr ? (
+                <div className="text-red-500 font-semibold text-center">
+                  {pwdErr}
+                </div>
+              ) : (
+                err && <div className="text-red-500 font-semibold">{err}</div>
+              )}
+            </div>
+
+            {/* //back & change button. */}
             <div className="flex flex-row justify-between">
               <div>
                 <div

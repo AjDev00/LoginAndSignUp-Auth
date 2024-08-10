@@ -23,16 +23,17 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [usernameErr, setUsernameErr] = useState("");
 
+  //password visibility params.
   const [password, setPassword] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const type = "password";
+  const type2 = "text";
 
   const [loading, setLoading] = useState(0);
   const history = useHistory();
 
-  const type = "password";
-  const type2 = "text";
-
+  //insert users using api.
   async function onSubmit(allData) {
     const newData = {
       ...allData,
@@ -151,6 +152,8 @@ export default function SignUp() {
             )}
           </div>
         </div>
+
+        {/* //button. */}
         <div className="justify-center mt-10 items-center flex border border-transparent border-green-500 text-white p-3 bg-green-500 rounded-full font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">
           <button type="submit">Create Account</button>
           {/* <div className="flex flex-row gap-4 justify-center items-center">

@@ -24,7 +24,7 @@ export default function LogIn() {
   const type = "password";
   const type2 = "text";
 
-  //params used in fetching method.
+  //params used in fetching method(err handling).
   const [err, setErr] = useState("");
 
   //check if user username matches user password in the DB.

@@ -134,11 +134,18 @@ export default function SignUp() {
             />
             <div onClick={() => setPasswordVisibility(!passwordVisibility)}>
               {passwordVisibility ? (
-                <FaEye className="ml-64 -mt-9 opacity-80" size={18} />
+                <FaEye
+                  className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                  size={18}
+                />
               ) : (
-                <FaEyeSlash className="ml-64 -mt-9 opacity-80" size={18} />
+                <FaEyeSlash
+                  className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                  size={18}
+                />
               )}
             </div>
+            <br />
             {passwordErr ? (
               <div className="text-red-500 font-semibold px-3">
                 {passwordErr}

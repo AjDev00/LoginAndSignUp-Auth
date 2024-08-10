@@ -70,9 +70,9 @@ export default function ForgotPassword() {
 
   return (
     <div>
-      <div className="px-3 mt-24">
+      <div className="px-3 mt-24 min-[1280px]:px-96 md:mt-20">
         <div className="border border-transparent rounded-tl-xl rounded-tr-xl rounded-br-xl shadow-xl px-3 bg-white">
-          <div className="text-[18px] font-semibold flex justify-center text-center py-3">
+          <div className="text-[18px] font-semibold flex justify-center text-center py-3 md:py-10">
             Olodo, change your password here!
           </div>
           <form
@@ -125,9 +125,15 @@ export default function ForgotPassword() {
                   }
                 >
                   {newPasswordVisibility ? (
-                    <FaEye className="ml-64 -mt-9 opacity-80" size={18} />
+                    <FaEye
+                      className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                      size={18}
+                    />
                   ) : (
-                    <FaEyeSlash className="ml-64 -mt-9 opacity-80" size={18} />
+                    <FaEyeSlash
+                      className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                      size={18}
+                    />
                   )}
                 </div>
                 <br />
@@ -156,9 +162,15 @@ export default function ForgotPassword() {
                   }
                 >
                   {confPasswordVisibility ? (
-                    <FaEye className="ml-64 -mt-9 opacity-80" size={18} />
+                    <FaEye
+                      className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                      size={18}
+                    />
                   ) : (
-                    <FaEyeSlash className="ml-64 -mt-9 opacity-80" size={18} />
+                    <FaEyeSlash
+                      className="ml-64 -mt-9 opacity-80 md:ml-[510px] cursor-pointer"
+                      size={18}
+                    />
                   )}
                 </div>
                 <br />

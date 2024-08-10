@@ -7,7 +7,7 @@ export default function Container() {
   const { signUp, handleLogIn, handleSignUp } = useContext(AppContext);
 
   return (
-    <div className="px-3 mt-24">
+    <div className="px-3 mt-24 md:mt-20 min-[1280px]:px-96">
       <div className="border border-transparent rounded-tl-xl rounded-tr-xl rounded-br-xl shadow-xl px-3 bg-white">
         <div className="flex flex-row justify-between mb-10 text-[18px]">
           <div onClick={handleLogIn} className="">

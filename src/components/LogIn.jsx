@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import loadingImg from "../assets/loading4.svg";
 
 export default function LogIn() {
   //react hook forms.
@@ -27,8 +28,12 @@ export default function LogIn() {
   //params used in fetching method(err handling).
   const [err, setErr] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   //check if user username matches user password in the DB.
   async function onSubmit() {
+    setLoading(true);
+
     const response = await fetch(
       "http://localhost:8000/api/get-details/" +
         loginUsername +
@@ -43,8 +48,10 @@ export default function LogIn() {
       setErr("");
       setLoginUsername("");
       setLoginPassword("");
+      setLoading(false);
     } else {
       setErr("Username or password incorrect!");
+      setLoading(false);
     }
   }
 
@@ -110,7 +117,19 @@ export default function LogIn() {
 
         {/* //login button. */}
         <div className="justify-center mt-4 items-center flex border border-transparent border-green-500 text-white p-3 bg-green-500 rounded-full font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">
-          <button>Login</button>
+          {!loading ? (
+            <button type="submit">Login</button>
+          ) : (
+            <div className="flex flex-row gap-4 justify-center items-center">
+              <button
+                disabled="disabled"
+                className="disabled:cursor-not-allowed"
+              >
+                Logging In...
+              </button>
+              <img src={loadingImg} alt="" className="w-7 h-7 animate-spin" />
+            </div>
+          )}
         </div>
 
         {/* //forgotten-pwd. */}

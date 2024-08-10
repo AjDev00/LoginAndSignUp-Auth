@@ -30,11 +30,13 @@ export default function SignUp() {
   const type = "password";
   const type2 = "text";
 
-  const [loading, setLoading] = useState(0);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   //insert users using api.
   async function onSubmit(allData) {
+    setLoading(true);
+
     const newData = {
       ...allData,
       email: email,
@@ -55,7 +57,7 @@ export default function SignUp() {
       setEmailErr(data.errors.email);
       setUsernameErr(data.errors.name);
       setPasswordErr(data.errors.password);
-      //   setLoading(false);
+      setLoading(false);
     } else {
       toast("SignUp successfull!");
       setEmail("");
@@ -64,7 +66,7 @@ export default function SignUp() {
       setUsernameErr("");
       setPassword("");
       setPasswordErr("");
-      //   setLoading(false);
+      setLoading(false);
       //   console.log(data);
       //   setLoading(false);
     }
@@ -162,7 +164,19 @@ export default function SignUp() {
 
         {/* //button. */}
         <div className="justify-center mt-10 items-center flex border border-transparent border-green-500 text-white p-3 bg-green-500 rounded-full font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">
-          <button type="submit">Create Account</button>
+          {!loading ? (
+            <button type="submit">Create Account</button>
+          ) : (
+            <div className="flex flex-row gap-4 justify-center items-center">
+              <button
+                disabled="disabled"
+                className="disabled:cursor-not-allowed"
+              >
+                Creating account...
+              </button>
+              <img src={loadingImg} alt="" className="w-7 h-7 animate-spin" />
+            </div>
+          )}
           {/* <div className="flex flex-row gap-4 justify-center items-center">
               <span type="submit">Creating account</span>
               <div>
@@ -174,6 +188,8 @@ export default function SignUp() {
               </div>
             </div> */}
         </div>
+
+        {/* //add-ons. */}
         <div className="px-1 mt-2 text-[18px]  font-semibold text-center">
           Clicking create account means you agree to our{" "}
           <span className="text-green-500 cursor-pointer">

@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { toast } from "react-toastify";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+// import loadingImg from "../assets/loading4.svg";
 
 export default function ForgotPassword() {
   //react hook form params.
@@ -31,9 +32,12 @@ export default function ForgotPassword() {
   const type2 = "text";
 
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   //update password using api.
   async function onSubmit(data) {
+    setLoading(true);
+
     if (newPassword === confNewPassword) {
       const newData = {
         ...data,
@@ -55,16 +59,20 @@ export default function ForgotPassword() {
 
       if (allData.status === false && allData.code === 400) {
         setPwdErr(allData.errors.password[0]);
+        setLoading(false);
       } else if (allData.status === false && allData.code === 404) {
         setUserErr(allData.message);
+        setLoading(false);
       } else {
         toast("Password Updated!");
         history.push("/");
+        setLoading(false);
       }
 
       // console.log(allData);
     } else {
       setErr("Passwords do not match!");
+      setLoading(false);
     }
   }
 
@@ -206,9 +214,18 @@ export default function ForgotPassword() {
                 </div>
               </div>
               <div>
-                <button className="justify-center mt-4 items-center flex border border-transparent border-green-500 text-white p-2 px-4 bg-green-500 rounded-md font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">
-                  Change
-                </button>
+                {!loading ? (
+                  <button className="justify-center mt-4 items-center flex border border-transparent border-green-500 text-white p-2 px-4 bg-green-500 rounded-md font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300">
+                    Change
+                  </button>
+                ) : (
+                  <button
+                    disabled="disabled"
+                    className="disabled:cursor-not-allowed justify-center mt-4 items-center flex border border-transparent border-green-500 text-white p-2 px-4 bg-green-500 rounded-md font-bold text-[18px] cursor-pointer hover:opacity-80 duration-300"
+                  >
+                    Change
+                  </button>
+                )}
               </div>
             </div>
             <div>
